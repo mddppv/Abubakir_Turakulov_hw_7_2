@@ -7,11 +7,22 @@
 		android:background="@color/black"
 		tools:context=".MainActivity">
 
+	<com.google.android.material.button.MaterialButton
+			android:id="@+id/btn_next"
+			style="@style/Gray.Button"
+			android:layout_width="match_parent"
+			android:layout_marginHorizontal="18dp"
+			android:layout_marginTop="16dp"
+			android:onClick="onNextActivity"
+			android:text="continue"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:layout_editor_absoluteX="17dp" />
+
 	<FrameLayout
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-			app:layout_constraintTop_toTopOf="parent">
+			app:layout_constraintTop_toBottomOf="@id/btn_next">
 
 		<TextView
 				android:id="@+id/text_view"
@@ -45,15 +56,17 @@
 					android:text="AC" />
 
 			<com.google.android.material.button.MaterialButton
+					android:id="@+id/btn_pm"
 					style="@style/Gray.Button"
 					android:layout_marginHorizontal="12dp"
+					android:onClick="onPMClick"
 					android:text="+/-" />
 
 			<com.google.android.material.button.MaterialButton
-					style="@style/Gray.Button"
 					android:id="@+id/btn_percent"
-					android:onClick="onOperationClick"
+					style="@style/Gray.Button"
 					android:layout_marginEnd="12dp"
+					android:onClick="onOperationClick"
 					android:text="%" />
 
 			<com.google.android.material.button.MaterialButton
@@ -182,10 +195,10 @@
 					android:textAlignment="textStart" />
 
 			<com.google.android.material.button.MaterialButton
-					style="@style/Dark.Button"
 					android:id="@+id/btn_dot"
-					android:onClick="onDotClick"
+					style="@style/Dark.Button"
 					android:layout_marginHorizontal="12dp"
+					android:onClick="onDotClick"
 					android:text="." />
 
 			<com.google.android.material.button.MaterialButton

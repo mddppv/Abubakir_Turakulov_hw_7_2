@@ -1,12 +1,13 @@
 package com.example.abubakir_turakulov_hw_7_2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,12 +15,40 @@ public class MainActivity extends AppCompatActivity {
     private Double first, second;
     private Boolean isOperationClick;
     private Operation currentOperation;
+    private Button nextButton;
+    private Intent nextActivity;
+
+    public static final String KEY = "Amount";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nextActivity = new Intent(MainActivity.this, NextActivity.class);
+
         textView = findViewById(R.id.text_view);
+        nextButton = findViewById(R.id.btn_next);
+        nextButton.setVisibility(View.GONE);
+
+        textView.setText("0");
+        first = 0.0;
+        second = 0.0;
+        currentOperation = Operation.ADDITION;
+        updateTextView(calculateOperation(first, second, currentOperation));
+
+        Button plusMinusButton = findViewById(R.id.btn_pm);
+        plusMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPMClick(v);
+            }
+        });
+    }
+
+    public void onNextActivity(View view) {
+        String result = textView.getText().toString();
+        nextActivity.putExtra(KEY, result);
+        startActivity(nextActivity);
     }
 
     public void onNumberClick(View view) {
@@ -34,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
             textView.append(".");
         } else {
             textView.append(textButton);
+        }
+        if (view.getId() == R.id.btn_equal) {
+            nextButton.setVisibility(View.VISIBLE);
+        } else {
+            nextButton.setVisibility(View.GONE);
         }
         isOperationClick = false;
     }
@@ -70,12 +104,38 @@ public class MainActivity extends AppCompatActivity {
                 updateTextView(result);
             }
         }
+        if (view.getId() == R.id.btn_equal) {
+            nextButton.setVisibility(View.VISIBLE);
+        } else {
+            nextButton.setVisibility(View.GONE);
+        }
         isOperationClick = true;
     }
 
     public void onDotClick(View view) {
         if (!textView.getText().toString().contains(".")) {
             textView.append(".");
+        }
+        if (view.getId() == R.id.btn_equal) {
+            nextButton.setVisibility(View.VISIBLE);
+        } else {
+            nextButton.setVisibility(View.GONE);
+        }
+    }
+
+    public void onPMClick(View view) {
+        String currentText = textView.getText().toString();
+        if (!currentText.equals("0")) {
+            if (currentText.charAt(0) == '-') {
+                textView.setText(currentText.substring(1));
+            } else {
+                textView.setText("-" + currentText);
+            }
+        }
+        if (view.getId() == R.id.btn_equal) {
+            nextButton.setVisibility(View.VISIBLE);
+        } else {
+            nextButton.setVisibility(View.GONE);
         }
     }
 
